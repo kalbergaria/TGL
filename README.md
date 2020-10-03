@@ -1,2 +1,1 @@
-# TGL
-Terminal Game Loader
+# TGL (short for "Terminal Game Loader")
