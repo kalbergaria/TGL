@@ -1,0 +1,2 @@
+TLib.o: Code/TLib/TLib.cpp Code/TLib/TLib.h
+TGLauncher.o: Code/TGLauncher.cpp Code/TLib/TLib.h

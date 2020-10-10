@@ -1,59 +1,34 @@
 {
     "tasks": [
-        // Unix Build Task
+
+        // UNIX and Mac Build Task
         {
-            "label": "build-unix",
+            "label": "UNIX/Mac Build",
             "type": "shell",
-            "command": "/usr/bin/g++",
-            "args": [
-                "-g",
-                "${file}",
-                "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
-            ],
+            "command": "/usr/bin/make",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
-            "problemMatcher": [
-                "$gcc"
-            ],
             "group": {
                 "kind": "build",
                 "isDefault": true
-            }
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
         },
 
-        // Mac Build Task
+        // UNIX and Mac Clean Task
         {
-            "label": "build-mac",
-            "command": "clang++",
-            "args": [
-                "-o",
-                "${${fileDirname}", // executable
-                "${file}", // main file
-                "-g",
-                "-v"
-            ],
+            "label": "UNIX/Mac Clean",
             "type": "shell",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "panel": "shared"
+            "command": "/usr/bin/make",
+            "options": {
+                "cwd": "${workspaceFolder}"
             },
-            "problemMatcher": {
-                "owner": "cpp",
-                "fileLocation": [
-                    "relative",
-                    "${workspaceRoot}"
-                ],
-                "pattern": {
-                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
-                    "file": 1,
-                    "line": 2,
-                    "column": 3,
-                    "severity": 4,
-                    "message": 5
-                }
+            "group": {
+                "kind": "build",
+                "isDefault": true
             }
         }
     ],
