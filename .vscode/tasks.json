@@ -1,8 +1,9 @@
 {
     "tasks": [
+        // Unix Build Task
         {
+            "label": "build-unix",
             "type": "shell",
-            "label": "C/C++: g++ build active file",
             "command": "/usr/bin/g++",
             "args": [
                 "-g",
@@ -19,6 +20,40 @@
             "group": {
                 "kind": "build",
                 "isDefault": true
+            }
+        },
+
+        // Mac Build Task
+        {
+            "label": "build-mac",
+            "command": "clang++",
+            "args": [
+                "-o",
+                "${${fileDirname}", // executable
+                "${file}", // main file
+                "-g",
+                "-v"
+            ],
+            "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceRoot}"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
             }
         }
     ],
