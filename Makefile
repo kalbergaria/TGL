@@ -1,35 +1,42 @@
 # This makefile was based on friedmud's answer to the following question
 # https://stackoverflow.com/questions/2481269/how-to-make-a-simple-c-makefile
 
-appname  := TGL
-builddir := BuildOutputs
+appName     := TLib
+buildDir    := BuildOutputs
+relBuildDir := $(buildDir)/Release
+dbgBuildDir := $(buildDir)/Debug
 
-LDFLAGS :=
-LDLIBS  :=
+incDirs  := $(shell find . -type d)
+incFlags := $(foreach dir, incDirs, -I$(dir))
+srcFiles := $(shell find . -name "*.cpp")
+objs     := $(patsubst %.cpp, %.o, $(srcFiles))
 
-incdirs  := $(shell find . -type d)
-incflags := $(foreach dir, incdirs, -I$(dir))
-srcfiles := $(shell find . -name "*.cpp")
-objects  := $(patsubst %.cpp, %.o, $(srcfiles))
+ldFlags :=
+ldLibs  :=
 
-CXX      := g++
-CXXFLAGS := -g -pthread $(incflags) # sometimes need -lpthread instead
+cxx      := g++
+cxxFlags := 
+dbgFlags := -g
 
-all: $(appname)
+all: release
 
-$(appname): $(objects)
-	mkdir -p $(builddir)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $(builddir)/$(appname).out $(objects) $(LDLIBS)
+release: $(objs)
+	mkdir -p $(relBuildDir)
+	$(cxx) $(incFlags) $(cxxFlags) $(ldFlags) -o $(relBuildDir)/$(appName).out $(objs) $(ldLibs)
+
+debug: $(objs)
+	mkdir -p $(dbgBuildDir)
+	$(cxx) $(incFlags) $(dbgFlags) $(cxxFlags) $(ldFlags) -o $(dbgBuildDir)/$(appName).out $(objs) $(ldLibs)
 
 depend: .depend
 
-.depend: $(srcfiles)
+.depend: $(srcFiles)
 	rm -f ./.depend
-	$(CXX) $(CXXFLAGS) -MM $^>>./.depend;
+	$(cxx) $(cxxFlags) -MM $^>>./.depend;
 
 clean:
-	rm -rf $(objects)
-	rm -rf $(builddir)/*
+	rm -rf $(objs)
+	rm -rf $(buildDir)/*
 
 dist-clean: clean
 	rm -f .depend
